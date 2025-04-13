@@ -16,9 +16,9 @@ class OnboardingRouter: OnboardingRouterProtocol {
     weak var viewController: UIViewController?
     
     func routeToLogin() {
-//            let loginVC = LoginBuilder.build()
-//            viewController?.navigationController?.pushViewController(loginVC, animated: true)
-        }
+        let loginVC = LoginBuilder.build()
+        viewController?.navigationController?.pushViewController(loginVC, animated: true)
+    }
     
     
 }

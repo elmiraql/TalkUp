@@ -23,7 +23,10 @@ class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mainView.login.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
+
     }
-    
+    @objc private func loginTapped() {
+           presenter?.didTapLogin()
+       }
 }

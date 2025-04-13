@@ -18,7 +18,7 @@ class OnboardingPresenter: OnboardingPresenterProtocol {
     var router: OnboardingRouterProtocol?
     
     func didTapLogin() {
-        
+        router?.routeToLogin()
     }
     
     

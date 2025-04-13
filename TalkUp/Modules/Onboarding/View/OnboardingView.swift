@@ -11,7 +11,7 @@ class OnboardingView: UIView {
     
     lazy var bgImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "bgimage")
+        image.image = UIImage(named: "image")
         image.contentMode = .scaleAspectFit
         image.clipsToBounds = true
         return image
@@ -38,7 +38,7 @@ class OnboardingView: UIView {
     }()
     
     lazy var login: UIButton = {
-        let button = PrimaryButton(title: "I already have an account", titleColor: .black, bgColor: .systemGray5)
+        let button = PrimaryButton(title: "I already have an account", titleColor: .black, bgColor: .systemGray6)
         return button
     }()
     
@@ -52,13 +52,13 @@ class OnboardingView: UIView {
     }
     
     func setupUI(){
-        backgroundColor = .systemGray5
+        backgroundColor = .systemGray6
         
         addSubViews(bgImageView, titleLabel, subTitleLabel, getStarted, login)
         
         if let image = bgImageView.image {
             let aspectRatio = image.size.width / image.size.height
-            bgImageView.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor)
+            bgImageView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
             bgImageView.heightAnchor.constraint(equalTo: bgImageView.widthAnchor, multiplier: 1 / aspectRatio).isActive = true
         }
         

@@ -99,8 +99,14 @@ var hasTopNotch: Bool {
 
 extension UITextField {
     func setLeftPaddingPoints(_ amount: CGFloat) {
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: frame.height))
-        leftView = paddingView
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.height))
+        leftView = padding
         leftViewMode = .always
+    }
+
+    func setRightPaddingPoints(_ amount: CGFloat) {
+        let padding = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.height))
+        rightView = padding
+        rightViewMode = .always
     }
 }
