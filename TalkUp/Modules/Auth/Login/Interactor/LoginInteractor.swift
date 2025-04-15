@@ -11,6 +11,11 @@ protocol LoginInteractorProtocol: AnyObject {
     func login(email: String, password: String)
 }
 
+protocol LoginInteractorOutput: AnyObject {
+    func loginSucceeded()
+    func loginFailed(error: String)
+}
+
 final class LoginInteractor: LoginInteractorProtocol {
     
     weak var presenter: LoginInteractorOutput?
@@ -24,7 +29,3 @@ final class LoginInteractor: LoginInteractorProtocol {
     }
 }
 
-protocol LoginInteractorOutput: AnyObject {
-    func loginSucceeded()
-    func loginFailed(error: String)
-}

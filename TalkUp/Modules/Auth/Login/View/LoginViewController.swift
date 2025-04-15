@@ -26,6 +26,18 @@ final class LoginViewController: UIViewController, LoginViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mainView.signIn.addTarget(self, action: #selector(signInTapped), for: .touchUpInside)
+        mainView.register.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
+
+    }
+    
+    @objc private func signInTapped() {
+        presenter?.didTapSignIn(email: mainView.email.text,
+                                password: mainView.password.text)
+    }
+    
+    @objc private func registerTapped() {
+        presenter?.didTapRegister()
     }
  
     func showError(message: String) {

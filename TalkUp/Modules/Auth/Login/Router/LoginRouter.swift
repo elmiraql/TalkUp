@@ -17,10 +17,11 @@ final class LoginRouter: LoginRouterProtocol {
     weak var viewController: UIViewController?
     
     func routeToRegister() {
-        
+        let registrationVC = RegistrationBuilder.build()
+        viewController?.navigationController?.pushViewController(registrationVC, animated: true)
     }
     
     func routeToMain() {
-        print("Routing to main screen TabBarController")
+        print("routing to main screen TabBarController")
     }
 }

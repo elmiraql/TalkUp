@@ -24,9 +24,14 @@ class OnboardingViewController: UIViewController, OnboardingViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainView.login.addTarget(self, action: #selector(loginTapped), for: .touchUpInside)
-
+        mainView.getStarted.addTarget(self, action: #selector(registerTapped), for: .touchUpInside)
     }
+    
     @objc private func loginTapped() {
-           presenter?.didTapLogin()
-       }
+        presenter?.didTapLogin()
+    }
+    
+    @objc private func registerTapped() {
+        presenter?.didTapRegister()
+    }
 }

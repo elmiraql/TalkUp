@@ -9,6 +9,7 @@ import UIKit
 
 protocol OnboardingRouterProtocol: AnyObject {
     func routeToLogin()
+    func routeToRegister()
 }
 
 class OnboardingRouter: OnboardingRouterProtocol {
@@ -20,5 +21,9 @@ class OnboardingRouter: OnboardingRouterProtocol {
         viewController?.navigationController?.pushViewController(loginVC, animated: true)
     }
     
+    func routeToRegister(){
+        let registerVC = RegistrationBuilder.build()
+        viewController?.navigationController?.pushViewController(registerVC, animated: true)
+    }
     
 }

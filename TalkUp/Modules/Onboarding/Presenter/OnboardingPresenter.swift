@@ -9,10 +9,11 @@ import Foundation
 
 protocol OnboardingPresenterProtocol: AnyObject {
     func didTapLogin()
+    func didTapRegister()
 }
 
 class OnboardingPresenter: OnboardingPresenterProtocol {
-    
+   
     weak var view: OnboardingViewProtocol?
     var interactor: OnboardingInteractorProtocol?
     var router: OnboardingRouterProtocol?
@@ -20,6 +21,11 @@ class OnboardingPresenter: OnboardingPresenterProtocol {
     func didTapLogin() {
         router?.routeToLogin()
     }
+    
+    func didTapRegister() {
+        router?.routeToRegister()
+    }
+    
     
     
 }

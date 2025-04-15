@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class LabeledTextField: UIView {
     
@@ -13,10 +14,20 @@ final class LabeledTextField: UIView {
         case email
         case password
     }
+    
+    var textPublisher: AnyPublisher<String, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: textField)
+            .compactMap { ($0.object as? UITextField)?.text }
+            .eraseToAnyPublisher()
+    }
 
     private let label = UILabel()
     let textField = UITextField()
     private let toggleButton = UIButton(type: .system)
+    
+    var text: String {
+        textField.text ?? ""
+    }
 
     private var isSecure: Bool = false
     
