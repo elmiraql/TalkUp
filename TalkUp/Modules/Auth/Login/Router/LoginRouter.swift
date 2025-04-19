@@ -22,6 +22,7 @@ final class LoginRouter: LoginRouterProtocol {
     }
     
     func routeToMain() {
-        print("routing to main screen TabBarController")
+        let tabBar = MainTabBarController()
+        viewController?.navigationController?.setViewControllers([tabBar], animated: true)
     }
 }

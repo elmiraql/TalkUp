@@ -26,7 +26,7 @@ class RegistrationView: UIView {
     
      let emailField = LabeledTextField(type: .email, placeholder: "you@example.com")
      let passwordField = LabeledTextField(type: .password, placeholder: "••••••••")
-     let confirmField = LabeledTextField(type: .password, placeholder: "••••••••")
+     let confirmField = LabeledTextField(type: .repeatePassword, placeholder: "••••••••")
      let signUpButton = PrimaryButton(title: "Sign Up")
 
     override init(frame: CGRect){
@@ -40,6 +40,9 @@ class RegistrationView: UIView {
     
     func setupViews(){
         backgroundColor = .systemGray6
+        
+        signUpButton.isEnabled = false
+        signUpButton.alpha = 0.5
         
         addSubview(bgImageView)
         if let image = bgImageView.image {

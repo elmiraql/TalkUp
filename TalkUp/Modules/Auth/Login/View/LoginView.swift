@@ -19,7 +19,7 @@ class LoginView: UIView {
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sign in"
+        label.text = "#Sign in"
         label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         return label
     }()
@@ -35,7 +35,9 @@ class LoginView: UIView {
     }()
     
     lazy var signIn: UIButton = {
-        let button = PrimaryButton(title: "#Sign in")
+        let button = PrimaryButton(title: "Sign in")
+        button.isEnabled = false
+        button.alpha = 0.5
         return button
     }()
     

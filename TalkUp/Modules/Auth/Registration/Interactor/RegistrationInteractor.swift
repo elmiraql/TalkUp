@@ -22,7 +22,15 @@ final class RegistrationInteractor: RegistrationInteractorProtocol {
         AuthService.shared.register(email: email, password: password) { [weak self] result in
             switch result {
             case .success:
-                self?.presenter?.registrationSucceeded()
+                UserService.shared.saveUser(email: email, displayName: "Какое то имя") { error in
+                    if let error = error {
+                        print("ошибка сохранения юзера: \(error.localizedDescription)")
+                    } else {
+                        print("юзер сохранён в Firestore. в коллекцию users")
+                        self?.presenter?.registrationSucceeded()
+                    }
+                }
+               
             case .failure(let error):
                 self?.presenter?.registrationFailed(error: error.localizedDescription)
             }

@@ -12,9 +12,11 @@ protocol RegistrationRouterProtocol: AnyObject {
 }
 
 final class RegistrationRouter: RegistrationRouterProtocol {
+    
     weak var viewController: UIViewController?
 
     func routeToLogin() {
         viewController?.navigationController?.popViewController(animated: true)
+        
     }
 }

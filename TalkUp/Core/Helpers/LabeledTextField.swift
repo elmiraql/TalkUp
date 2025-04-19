@@ -13,6 +13,7 @@ final class LabeledTextField: UIView {
     enum FieldType {
         case email
         case password
+        case repeatePassword
     }
     
     var textPublisher: AnyPublisher<String, Never> {
@@ -24,6 +25,7 @@ final class LabeledTextField: UIView {
     private let label = UILabel()
     let textField = UITextField()
     private let toggleButton = UIButton(type: .system)
+    private let errorLabel = UILabel()
     
     var text: String {
         textField.text ?? ""
@@ -44,7 +46,12 @@ final class LabeledTextField: UIView {
     private func setupUI(type: FieldType, placeholder: String) {
         label.font = .systemFont(ofSize: 14, weight: .medium)
         label.textColor = .darkText
-        label.text = type == .email ? "Email" : "Password"
+
+        switch type {
+        case .email: label.text = "Email"
+        case .password: label.text = "Password"
+        case .repeatePassword: label.text = "Repeate password"
+        }
 
         textField.placeholder = placeholder
         textField.font = .systemFont(ofSize: 16)
@@ -68,8 +75,13 @@ final class LabeledTextField: UIView {
             toggleButton.translatesAutoresizingMaskIntoConstraints = false
             addSubview(toggleButton)
         }
+        
+        errorLabel.font = .systemFont(ofSize: 12)
+        errorLabel.textColor = .systemRed
+        errorLabel.numberOfLines = 0
+        errorLabel.isHidden = true
 
-        let stack = UIStackView(arrangedSubviews: [label, textField])
+        let stack = UIStackView(arrangedSubviews: [label, textField, errorLabel])
         stack.axis = .vertical
         stack.spacing = 4
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -101,5 +113,17 @@ final class LabeledTextField: UIView {
         textField.isSecureTextEntry = isSecure
         let imageName = isSecure ? "eye" : "eye.slash"
         toggleButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
+    func setError(_ message: String?) {
+        if let message = message, !message.isEmpty {
+            errorLabel.text = message
+            errorLabel.isHidden = false
+            textField.layer.borderColor = UIColor.systemRed.cgColor
+        } else {
+            errorLabel.text = nil
+            errorLabel.isHidden = true
+            textField.layer.borderColor = UIColor.systemGray4.cgColor
+        }
     }
 }

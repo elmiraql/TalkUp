@@ -21,10 +21,13 @@ final class LoginInteractor: LoginInteractorProtocol {
     weak var presenter: LoginInteractorOutput?
     
     func login(email: String, password: String) {
-        if email == "test@test.com" && password == "1234" {
-            presenter?.loginSucceeded()
-        } else {
-            presenter?.loginFailed(error: "invalid email or password")
+        AuthService.shared.login(email: email, password: password) { [weak self] result in
+            switch result {
+            case .success:
+                self?.presenter?.loginSucceeded()
+            case.failure(let error):
+                self?.presenter?.loginFailed(error: error.localizedDescription)
+            }
         }
     }
 }

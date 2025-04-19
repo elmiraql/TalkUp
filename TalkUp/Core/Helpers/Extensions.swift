@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 let screenWidth = UIScreen.main.bounds.width
 let screenHeight = UIScreen.main.bounds.height
@@ -108,5 +109,13 @@ extension UITextField {
         let padding = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.height))
         rightView = padding
         rightViewMode = .always
+    }
+}
+
+extension UITextField {
+    var textPublisher: AnyPublisher<String?, Never> {
+        NotificationCenter.default.publisher(for: UITextField.textDidChangeNotification, object: self)
+            .map { ($0.object as? UITextField)?.text }
+            .eraseToAnyPublisher()
     }
 }

@@ -54,8 +54,23 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
         let emailPublisher = mainView.emailField.textPublisher
         let passwordPublisher = mainView.passwordField.textPublisher
         let confirmPublisher = mainView.confirmField.textPublisher
+
+         passwordPublisher
+             .sink { [weak self] text in
+                 let error = text.count >= 6 ? nil : "Password must be at least 6 characters"
+                 self?.mainView.passwordField.setError(error)
+             }
+             .store(in: &cancellables)
+
+         Publishers.CombineLatest(passwordPublisher, confirmPublisher)
+             .sink { [weak self] pass, confirm in
+                 let error = pass == confirm ? nil : "Passwords donot match"
+                 self?.mainView.confirmField.setError(error)
+             }
+             .store(in: &cancellables)
         
         Publishers.CombineLatest3(emailPublisher, passwordPublisher, confirmPublisher)
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .map { email, password, confirmPassword in
                 return !email.isEmpty &&
                 email.contains("@") &&
@@ -64,16 +79,22 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
             }
             .receive(on: RunLoop.main)
             .sink { [weak self] isValid in
-                self?.mainView.signUpButton.isEnabled = !isValid
-                self?.mainView.signUpButton.alpha = !isValid ? 1.0 : 0.5
+                self?.mainView.signUpButton.isEnabled = isValid
+                self?.mainView.signUpButton.alpha = isValid ? 1.0 : 0.5
             }
+        
             .store(in: &cancellables)
         
         emailPublisher
             .sink { [weak self] text in
                 let isValid = text.contains("@")
                 self?.mainView.emailField.textField.layer.borderColor = isValid ? UIColor.systemGreen.cgColor : UIColor.systemRed.cgColor
+                
+                let error = text.contains("@") ? nil : "Email is invalid"
+                self?.mainView.emailField.setError(error)
             }
             .store(in: &cancellables)
+        
+      
     }
 }

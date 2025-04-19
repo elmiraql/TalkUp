@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9911844B2DAD597400F43EAE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 9911844A2DAD597400F43EAE /* FirebaseAuth */; };
+		991185842DB1885E00F43EAE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 991185832DB1885E00F43EAE /* CombineCocoa */; };
+		9911858C2DB25D3B00F43EAE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9911858B2DB25D3B00F43EAE /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				991185842DB1885E00F43EAE /* CombineCocoa in Frameworks */,
 				9911844B2DAD597400F43EAE /* FirebaseAuth in Frameworks */,
+				9911858C2DB25D3B00F43EAE /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +100,7 @@
 				991183AE2DAAD82E00F43EAE /* TalkUp */,
 				991183C52DAAD83000F43EAE /* TalkUpTests */,
 				991183CF2DAAD83000F43EAE /* TalkUpUITests */,
+				991185822DB1885E00F43EAE /* Frameworks */,
 				991183AD2DAAD82E00F43EAE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -108,6 +113,13 @@
 				991183CC2DAAD83000F43EAE /* TalkUpUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		991185822DB1885E00F43EAE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +143,8 @@
 			name = TalkUp;
 			packageProductDependencies = (
 				9911844A2DAD597400F43EAE /* FirebaseAuth */,
+				991185832DB1885E00F43EAE /* CombineCocoa */,
+				9911858B2DB25D3B00F43EAE /* FirebaseFirestore */,
 			);
 			productName = TalkUp;
 			productReference = 991183AC2DAAD82E00F43EAE /* TalkUp.app */;
@@ -216,6 +230,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				991184492DAD597400F43EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				991184792DB1850800F43EAE /* XCRemoteSwiftPackageReference "CombineCocoa" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 991183AD2DAAD82E00F43EAE /* Products */;
@@ -588,6 +603,14 @@
 				minimumVersion = 11.11.0;
 			};
 		};
+		991184792DB1850800F43EAE /* XCRemoteSwiftPackageReference "CombineCocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CombineCommunity/CombineCocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -595,6 +618,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 991184492DAD597400F43EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
+		};
+		991185832DB1885E00F43EAE /* CombineCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 991184792DB1850800F43EAE /* XCRemoteSwiftPackageReference "CombineCocoa" */;
+			productName = CombineCocoa;
+		};
+		9911858B2DB25D3B00F43EAE /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 991184492DAD597400F43EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

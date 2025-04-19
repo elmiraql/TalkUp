@@ -10,6 +10,7 @@ protocol RegistrationPresenterProtocol: AnyObject {
 }
 
 final class RegistrationPresenter: RegistrationPresenterProtocol {
+    
     weak var view: RegistrationViewProtocol?
     var interactor: RegistrationInteractorProtocol?
     var router: RegistrationRouterProtocol?
@@ -24,16 +25,16 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 
     private func validate(email: String, password: String, confirm: String) -> String? {
         if email.isEmpty || password.isEmpty || confirm.isEmpty {
-            return "please fill in all fields"
+            return "пожалуйста заполните все поля"
         }
         if !email.contains("@") {
-            return "invalid email address"
+            return "некорректный email"
         }
         if password.count < 6 {
-            return "password must be at least 6 characters"
+            return "пароль должен быть минимум 6 символов"
         }
         if password != confirm {
-            return "passwords do not match"
+            return "пароля не совпадают"
         }
         return nil
     }
@@ -42,6 +43,7 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
 }
 
 extension RegistrationPresenter: RegistrationInteractorOutput {
+    
     func registrationSucceeded() {
         router?.routeToLogin()
     }

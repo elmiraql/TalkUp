@@ -25,7 +25,6 @@ final class PrimaryButton: UIButton {
         setTitle(title, for: .normal)
         
         titleLabel?.font = .systemFont(ofSize: 16, weight: .semibold)
-
         
         layer.cornerRadius = 10
         clipsToBounds = true
