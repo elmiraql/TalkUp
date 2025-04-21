@@ -21,7 +21,7 @@ final class LoginInteractor: LoginInteractorProtocol {
     weak var presenter: LoginInteractorOutput?
     
     func login(email: String, password: String) {
-        AuthService.shared.login(email: email, password: password) { [weak self] result in
+        FirebaseFacade.shared.login(email: email, password: password) { [weak self] result in
             switch result {
             case .success:
                 self?.presenter?.loginSucceeded()

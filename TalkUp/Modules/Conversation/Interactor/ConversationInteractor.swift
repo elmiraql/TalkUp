@@ -20,13 +20,13 @@ class ConversationInteractor: ConversationInteractorProtocol {
     private var listener: ListenerRegistration?
 
     func fetchMessages(with id: String) {
-        listener = FirebaseChatService.shared.observeConversation(with: id) { [weak self] messages in
+        listener = FirebaseFacade.shared.observeConversation(with: id) { [weak self] messages in
             self?.presenter?.messagesFetched(messages)
         }
     }
     
     func sendMessage(_ message: String, to id: String) {
-        FirebaseChatService.shared.sendMessage(to: id, text: message) { [weak self] error in
+        FirebaseFacade.shared.sendMessage(to: id, text: message) { [weak self] error in
             if let error = error {
                 print("не получилось отправить сообщение: \(error.localizedDescription)")
             }else{

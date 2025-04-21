@@ -11,7 +11,7 @@ protocol ConversationPresenterProtocol: AnyObject {
     func fetchMessages(with id: String)
     func messagesFetched(_ messages: [ConversationMessage])
     func numberOfMessages() -> Int
-    func message(at index: Int) -> ConversationMessage
+    func message(at index: Int) -> MessageDisplayable
     func sendMessage(receiverId: String, text: String)
     func messageSent()
 }
@@ -21,25 +21,25 @@ class ConversationPresenter: ConversationPresenterProtocol {
     weak var view: ConversationViewProtocol?
     var interactor: ConversationInteractorProtocol!
     var router: ConversationRouterProtocol?
-    private var messages: [ConversationMessage] = []
+    private var messages: [MessageDisplayable] = []
     
     func fetchMessages(with id: String) {
         interactor.fetchMessages(with: id)
     }
     
     func messagesFetched(_ messages: [ConversationMessage]) {
-        self.messages = messages
+        let decorated = messages.map { decorate($0) }
+        self.messages = decorated
         DispatchQueue.main.async {
-            self.view?.displayMessages(messages)
+            self.view?.displayMessages(decorated)
         }
-        
     }
     
     func numberOfMessages() -> Int {
         return messages.count
     }
     
-    func message(at index: Int) -> ConversationMessage {
+    func message(at index: Int) -> MessageDisplayable {
         return messages[index]
     }
     
@@ -51,7 +51,16 @@ class ConversationPresenter: ConversationPresenterProtocol {
         view?.messageSent()
     }
     
-    
+    private func decorate(_ message: ConversationMessage) -> MessageDisplayable {
+        
+        let basic = BasicMessageDecorator(wrapped: message)
+        
+        if case .text(let text) = message.type, text.contains("🔥") {
+            return ImportantMessageDecorator(wrapped: basic)
+        } else {
+            return basic
+        }
+    }
     
     
 }

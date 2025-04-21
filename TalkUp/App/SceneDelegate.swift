@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let onboardingVC = OnboardingBuilder.build()
         let onboardingNav = UINavigationController(rootViewController: onboardingVC)
         
-        let homeController = MainTabBarController() // ChatModuleBuilder.build()
+        let homeController = MainTabBarController()
         let homeNav = UINavigationController(rootViewController: homeController)
         
         let rootViewController: UIViewController

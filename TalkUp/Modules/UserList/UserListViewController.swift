@@ -29,7 +29,7 @@ final class UserListViewController: UIViewController {
     }
 
     private func fetchUsers() {
-        UserService.shared.fetchAllUsers { [weak self] users in
+        FirebaseFacade.shared.fetchAllUsers { [weak self] users in
             DispatchQueue.main.async {
                 self?.users = users
                 self?.tableView.reloadData()

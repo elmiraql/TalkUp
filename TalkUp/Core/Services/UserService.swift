@@ -21,7 +21,7 @@ final class UserService {
             return
         }
 
-        let user = UserModel(uid: uid, email: email, displayName: displayName)
+        let user = UserModel(uid: uid, email: email, displayName: displayName, avatarURL: "")
         let data = try? Firestore.Encoder().encode(user)
 
         db.collection("users").document(uid).setData(data ?? [:]) { error in

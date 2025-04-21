@@ -16,10 +16,21 @@ import UIKit
 //    let user: UserModel
 //    let timestamp: Date
 //}
+//struct ChatViewModel {
+//    let user: UserModel
+//    let lastMessage: String
+//    let time: String
+//    let avatar: UIImage?
+//    let name: String
+//}
 struct ChatViewModel {
     let user: UserModel
     let lastMessage: String
     let time: String
-    let avatar: UIImage?
-    let name: String
+    var avatarURL: String? {
+        user.avatarURL
+    }
+    var name: String {
+        user.displayName
+    }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ChatCell: UITableViewCell, ConfigurableCell {
 
@@ -78,7 +79,8 @@ final class ChatCell: UITableViewCell, ConfigurableCell {
     }
 
     func configure(with model: ChatViewModel) {
-        avatarImageView.image = model.avatar
+//        avatarImageView.image = model.user.avatarURL
+        avatarImageView.kf.setImage(with: URL(string: model.avatarURL ?? ""), placeholder: UIImage(named: "defaultAvatar"))
         nameLabel.text = model.name
         messageLabel.text = model.lastMessage
         timeLabel.text = model.time

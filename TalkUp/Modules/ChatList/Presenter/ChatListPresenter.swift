@@ -9,41 +9,25 @@ import UIKit
 import Foundation
 
 protocol ChatListPresenterProtocol: AnyObject {
-    
+    func viewDidLoad()
     var numberOfChats: Int { get }
     func chat(at index: Int) -> ChatViewModel
+    func didSelectChat(at index: Int)
 }
 
 final class ChatListPresenter: ChatListPresenterProtocol {
-    
-    private weak var view: ChatListViewController?
+   
+    private weak var view: ChatListViewProtocol?
+    var interactor: ChatListInteractorProtocol!
+    private var chats: [ChatViewModel] = []
+    var router: ChatListRouterProtocol!
 
-    private var chats: [ChatViewModel] = [
-        ChatViewModel(
-            user: UserModel(uid: "123", email: "john@example.com", displayName: "John"),
-            lastMessage: "Hey, how are you?",
-            time: "12:12",
-            avatar: UIImage(named: "image"),
-            name: "Jon"
-        ),
-        ChatViewModel(
-            user: UserModel(uid: "456", email: "jane@example.com", displayName: "Jane"),
-            lastMessage: "Let’s meet at 6",
-            time: "14:45",
-            avatar: UIImage(named: "image"),
-            name: "Jon"
-        ),
-        ChatViewModel(
-            user: UserModel(uid: "789", email: "max@example.com", displayName: "Max"),
-            lastMessage: "Call me!",
-            time: "16:10",
-            avatar: UIImage(named: "image"),
-            name: "Jon"
-        )
-    ]
-
-    init(view: ChatListViewController) {
+    init(view: ChatListViewProtocol) {
         self.view = view
+    }
+    
+    func viewDidLoad() {
+        interactor?.observeChats()
     }
 
     var numberOfChats: Int {
@@ -52,5 +36,18 @@ final class ChatListPresenter: ChatListPresenterProtocol {
     
     func chat(at index: Int) -> ChatViewModel {
         return chats[index]
+    }
+    
+    func didSelectChat(at index: Int) {
+        let chat = chats[index]
+        router.routeToChat(chat: chat)
+    }
+    
+}
+
+extension ChatListPresenter: ChatListInteractorOutput {
+    func didReceiveChats(_ chats: [ChatViewModel]) {
+        self.chats = chats
+        view?.reloadChatList()
     }
 }

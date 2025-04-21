@@ -19,10 +19,10 @@ final class RegistrationInteractor: RegistrationInteractorProtocol {
     weak var presenter: RegistrationInteractorOutput?
 
     func register(email: String, password: String) {
-        AuthService.shared.register(email: email, password: password) { [weak self] result in
+        FirebaseFacade.shared.register(email: email, password: password) { [weak self] result in
             switch result {
             case .success:
-                UserService.shared.saveUser(email: email, displayName: "Какое то имя") { error in
+                FirebaseFacade.shared.saveUser(email: email, displayName: "Какое то имя") { error in
                     if let error = error {
                         print("ошибка сохранения юзера: \(error.localizedDescription)")
                     } else {

@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 protocol ConversationViewProtocol: AnyObject {
-    func displayMessages(_ messages: [ConversationMessage])
+    func displayMessages(_ messages: [MessageDisplayable])
     func messageSent()
 }
 
@@ -47,7 +47,7 @@ final class ConversationViewController: UIViewController, ConversationViewProtoc
         mainView.tableView.register(TextMessageCell.self, forCellReuseIdentifier: TextMessageCell.reuseId)
     }
     
-    func displayMessages(_ messages: [ConversationMessage]) {
+    func displayMessages(_ messages: [MessageDisplayable]) {
         self.mainView.tableView.reloadData()
         self.scrollToBottom()
     }
@@ -84,12 +84,12 @@ extension ConversationViewController: UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let message = presenter?.message(at: indexPath.row) else { return UITableViewCell()}
+        guard let message = presenter?.message(at: indexPath.row) else { return UITableViewCell() }
 
         switch message.type {
-        case .text(let text):
+        case .text:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageCell.reuseId, for: indexPath) as! TextMessageCell
-            cell.configure(with: text, isIncoming: message.isIncoming)
+            cell.configure(with: message) 
             return cell
         default:
             return UITableViewCell()

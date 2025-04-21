@@ -37,11 +37,22 @@ final class TextMessageCell: UITableViewCell {
         messageLabel.anchor(top: bubble.topAnchor, left: bubble.leftAnchor, bottom: bubble.bottomAnchor, right: bubble.rightAnchor, paddingTop: 8, paddingLeft: 12, paddingBottom: 8, paddingRight: 12)
     }
 
-    func configure(with text: String, isIncoming: Bool) {
-        messageLabel.text = text
-        bubble.backgroundColor = isIncoming ? UIColor.systemGray5 : UIColor.systemBlue.withAlphaComponent(0.8)
-        messageLabel.textColor = isIncoming ? .label : .white
-
+    func configure(with message: MessageDisplayable) {
+        
+        messageLabel.text = extractText(from: message.type)
+        
+        switch message.style {
+        case .normal:
+            backgroundColor = .white
+        case .highlighted:
+            backgroundColor = .systemYellow.withAlphaComponent(0.3)
+        case .important:
+            backgroundColor = .systemRed.withAlphaComponent(0.2)
+        }
+        
+        bubble.backgroundColor = message.isIncoming ? UIColor.systemGray5 : UIColor.systemBlue.withAlphaComponent(0.8)
+        messageLabel.textColor = message.isIncoming ? .label : .white
+        
         bubble.translatesAutoresizingMaskIntoConstraints = false
         bubble.removeFromSuperview()
         contentView.addSubview(bubble)
@@ -53,8 +64,15 @@ final class TextMessageCell: UITableViewCell {
         NSLayoutConstraint.activate([
             bubble.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
             bubble.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
-            isIncoming ? leading : trailing,
+            message.isIncoming ? leading : trailing,
             bubble.widthAnchor.constraint(lessThanOrEqualToConstant: 280)
         ])
+    }
+    
+    private func extractText(from type: MessageType) -> String {
+        switch type {
+        case .text(let value): return value
+        default: return "не поддерживается"
+        }
     }
 }

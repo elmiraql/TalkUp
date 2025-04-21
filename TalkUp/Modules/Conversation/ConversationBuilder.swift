@@ -8,6 +8,7 @@
 import UIKit
 
 enum ConversationModuleBuilder {
+    
     static func build(with user: UserModel) -> UIViewController {
         let view = ConversationViewController()
         let presenter = ConversationPresenter()
