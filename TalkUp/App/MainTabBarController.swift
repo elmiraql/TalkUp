@@ -13,18 +13,22 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupTabs()
+           
     }
 
     private func setupTabs() {
         let chats = ChatModuleBuilder.build()
-        chats.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message"), tag: 0)
+        let chatsNav = UINavigationController(rootViewController: chats)
+        chatsNav.tabBarItem = UITabBarItem(title: "Chats", image: UIImage(systemName: "message"), tag: 0)
         
-        let usersVC = UserListViewController()
-        usersVC.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.2.fill"), tag: 1)
+        let usersVC = UserListBuilder.build()
+        let usersNav = UINavigationController(rootViewController: usersVC)
+           usersNav.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.2.fill"), tag: 1)
 
 //        let profile = ProfileModuleBuilder.build()
 //        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
 
-        viewControllers = [chats, usersVC] //profile
+        viewControllers = [chatsNav, usersNav] //profile
     }
+  
 }

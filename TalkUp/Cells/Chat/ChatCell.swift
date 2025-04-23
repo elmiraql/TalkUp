@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class ChatCell: UITableViewCell, ConfigurableCell {
 
@@ -73,16 +72,28 @@ final class ChatCell: UITableViewCell, ConfigurableCell {
             stack.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor),
             stack.trailingAnchor.constraint(lessThanOrEqualTo: timeLabel.leadingAnchor, constant: -8),
         ])
-
         timeLabel.anchor(top: contentView.topAnchor, right: contentView.rightAnchor, paddingTop: 20, paddingRight: 16)
         
     }
 
     func configure(with model: ChatViewModel) {
-//        avatarImageView.image = model.user.avatarURL
-        avatarImageView.kf.setImage(with: URL(string: model.avatarURL ?? ""), placeholder: UIImage(named: "defaultAvatar"))
         nameLabel.text = model.name
         messageLabel.text = model.lastMessage
         timeLabel.text = model.time
+
+        avatarImageView.subviews.forEach { $0.removeFromSuperview() }
+
+        let label = UILabel()
+        label.text = String(model.name.prefix(1)).uppercased()
+        label.font = .boldSystemFont(ofSize: 20)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.backgroundColor = .systemBlue
+        label.clipsToBounds = true
+        label.layer.cornerRadius = 24
+        label.frame = avatarImageView.bounds
+        label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        avatarImageView.addSubview(label)
     }
 }

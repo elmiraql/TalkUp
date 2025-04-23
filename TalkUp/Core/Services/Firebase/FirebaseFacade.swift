@@ -9,6 +9,7 @@ import Foundation
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseStorage
 import Combine
 
 final class FirebaseFacade {
@@ -18,7 +19,7 @@ final class FirebaseFacade {
     
     private let auth = Auth.auth()
     private let db = Firestore.firestore()
-    //      private let storage = Storage.storage()
+    private let storage = Storage.storage()
     
     // MARK: - Auth
     func register(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
@@ -197,7 +198,7 @@ final class FirebaseFacade {
             return
         }
         
-        let user = UserModel(uid: uid, email: email, displayName: displayName, avatarURL: "")
+        let user = UserModel(uid: uid, email: email, displayName: displayName)
         let data = try? Firestore.Encoder().encode(user)
         
         db.collection("users").document(uid).setData(data ?? [:]) { error in
@@ -224,5 +225,30 @@ final class FirebaseFacade {
             }
         }
     }
+    
+    // MARK: - Storage
+    func uploadProfileImage(_ image: UIImage, completion: @escaping (Result<String, Error>) -> Void) {
+            guard let imageData = image.jpegData(compressionQuality: 0.75),
+                  let userId = auth.currentUser?.uid else {
+                completion(.failure(NSError(domain: "upload", code: 0, userInfo: [NSLocalizedDescriptionKey: "invalid image or user not logged in"])))
+                return
+            }
+
+            let ref = storage.reference().child("avatars/\(userId).jpg")
+            ref.putData(imageData, metadata: nil) { _, error in
+                if let error = error {
+                    completion(.failure(error))
+                    return
+                }
+
+                ref.downloadURL { url, error in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else if let urlString = url?.absoluteString {
+                        completion(.success(urlString))
+                    }
+                }
+            }
+        }
     
 }

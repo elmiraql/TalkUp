@@ -127,3 +127,21 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+extension UIView {
+    
+    func findViewController() -> UIViewController? {
+        
+        var nextResponder: UIResponder? = self
+
+        while let responder = nextResponder {
+            if let vc = responder as? UIViewController {
+                return vc
+            }
+            nextResponder = responder.next
+        }
+
+        return nil
+    }
+    
+}

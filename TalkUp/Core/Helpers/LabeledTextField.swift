@@ -11,6 +11,7 @@ import Combine
 final class LabeledTextField: UIView {
     
     enum FieldType {
+        case name
         case email
         case password
         case repeatePassword
@@ -51,6 +52,7 @@ final class LabeledTextField: UIView {
         case .email: label.text = "Email"
         case .password: label.text = "Password"
         case .repeatePassword: label.text = "Repeate password"
+        case .name: label.text = "Name"
         }
 
         textField.placeholder = placeholder
@@ -65,7 +67,7 @@ final class LabeledTextField: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.systemGray4.cgColor
 
-        if type == .password {
+        if type == .password || type == .repeatePassword {
             isSecure = true
             textField.isSecureTextEntry = true
 
@@ -98,7 +100,7 @@ final class LabeledTextField: UIView {
             bottomAnchor.constraint(equalTo: stack.bottomAnchor)
         ])
 
-        if type == .password {
+        if type == .password || type == .repeatePassword {
             NSLayoutConstraint.activate([
                 toggleButton.trailingAnchor.constraint(equalTo: textField.trailingAnchor, constant: -12),
                 toggleButton.centerYAnchor.constraint(equalTo: textField.centerYAnchor),

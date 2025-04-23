@@ -9,13 +9,20 @@ import UIKit
 
 protocol ChatListViewProtocol: AnyObject {
     func reloadChatList()
+    func navigateToRoot()
 }
 
 final class ChatListViewController: UIViewController, ChatListViewProtocol {
 
     var presenter: ChatListPresenterProtocol?
-
-    private let tableView = UITableView()
+    var mainView: ChatListView!
+    
+    override func loadView() {
+        super.loadView()
+        let contentView = ChatListView()
+        view = contentView
+        mainView = contentView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,19 +30,36 @@ final class ChatListViewController: UIViewController, ChatListViewProtocol {
         title = "Chats"
         setupTableView()
         presenter?.viewDidLoad()
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Log Out",
+            style: .plain,
+            target: self,
+            action: #selector(logoutTapped)
+        )
     }
 
     private func setupTableView() {
-        view.addSubview(tableView)
-        tableView.frame = view.bounds
-        tableView.dataSource = self
-        tableView.delegate = self
+        mainView.tableView.dataSource = self
+        mainView.tableView.delegate = self
     }
     
     func reloadChatList() {
-        tableView.reloadData()
+        mainView.tableView.reloadData()
+        let isEmpty = presenter?.numberOfChats == 0
+        mainView.emptyStateLabel.isHidden = !isEmpty
+        mainView.tableView.isHidden = isEmpty
     }
     
+    @objc private func logoutTapped() {
+        presenter?.logout()
+    }
+    
+    func navigateToRoot(){
+        let onboardingVC = OnboardingBuilder.build()
+        let nav = UINavigationController(rootViewController: onboardingVC)
+        self.view.window?.rootViewController = nav
+    }
 }
 
 extension ChatListViewController: UITableViewDataSource {
@@ -62,16 +86,5 @@ extension ChatListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         presenter?.didSelectChat(at: indexPath.row)
-        
-//                AuthService.shared.logout { result in
-//                    let onboarding = OnboardingBuilder.build()
-//                    let nav = UINavigationController(rootViewController: onboarding)
-//        
-//                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-//                       let window = scene.windows.first {
-//                        window.rootViewController = nav
-//                        window.makeKeyAndVisible()
-//                    }
-//                }
     }
 }

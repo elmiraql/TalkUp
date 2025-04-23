@@ -13,10 +13,11 @@ protocol ChatListPresenterProtocol: AnyObject {
     var numberOfChats: Int { get }
     func chat(at index: Int) -> ChatViewModel
     func didSelectChat(at index: Int)
+    func logout()
 }
 
 final class ChatListPresenter: ChatListPresenterProtocol {
-   
+    
     private weak var view: ChatListViewProtocol?
     var interactor: ChatListInteractorProtocol!
     private var chats: [ChatViewModel] = []
@@ -43,11 +44,20 @@ final class ChatListPresenter: ChatListPresenterProtocol {
         router.routeToChat(chat: chat)
     }
     
+    func logout() {
+        interactor.logout()
+    }
+    
+   
+    
 }
 
 extension ChatListPresenter: ChatListInteractorOutput {
     func didReceiveChats(_ chats: [ChatViewModel]) {
         self.chats = chats
         view?.reloadChatList()
+    }
+    func didLogOut(){
+        view?.navigateToRoot()
     }
 }

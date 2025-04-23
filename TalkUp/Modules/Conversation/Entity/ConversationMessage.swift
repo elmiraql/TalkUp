@@ -46,7 +46,7 @@ struct UserModel: Codable {
     let uid: String
     let email: String
     let displayName: String
-    let avatarURL: String?
+//    let avatarURL: String?
 }
 
 struct BasicMessageDecorator: MessageDisplayable {

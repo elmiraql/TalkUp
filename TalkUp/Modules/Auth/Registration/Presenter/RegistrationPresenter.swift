@@ -5,8 +5,12 @@
 //  Created by Elmira Qurbanova on 14.04.25.
 //
 
+import UIKit
+import FirebaseStorage
+import Combine
+
 protocol RegistrationPresenterProtocol: AnyObject {
-    func didTapSignUp(email: String, password: String, confirmPassword: String)
+    func didTapSignUp(email: String, password: String, confirmPassword: String, name: String)
 }
 
 final class RegistrationPresenter: RegistrationPresenterProtocol {
@@ -14,12 +18,13 @@ final class RegistrationPresenter: RegistrationPresenterProtocol {
     weak var view: RegistrationViewProtocol?
     var interactor: RegistrationInteractorProtocol?
     var router: RegistrationRouterProtocol?
+    private var cancellables = Set<AnyCancellable>()
 
-    func didTapSignUp(email: String, password: String, confirmPassword: String) {
+    func didTapSignUp(email: String, password: String, confirmPassword: String, name: String) {
         if let error = validate(email: email, password: password, confirm: confirmPassword) {
             view?.showError(message: error)
         } else {
-            interactor?.register(email: email, password: password)
+            interactor?.register(email: email, password: password, name: name)
         }
     }
 

@@ -8,14 +8,11 @@
 import UIKit
 
 class RegistrationView: UIView {
-    
-    lazy var bgImageView: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "violetbg")
-        image.contentMode = .scaleAspectFit
-        image.clipsToBounds = true
-        return image
-    }()
+
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+//    let avatarContainer = UIView()
+//    let avatarSelector = AvatarSelectorView()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -24,6 +21,7 @@ class RegistrationView: UIView {
         return label
     }()
     
+     let nameField = LabeledTextField(type: .name, placeholder: "Enter your name")
      let emailField = LabeledTextField(type: .email, placeholder: "you@example.com")
      let passwordField = LabeledTextField(type: .password, placeholder: "••••••••")
      let confirmField = LabeledTextField(type: .repeatePassword, placeholder: "••••••••")
@@ -44,22 +42,28 @@ class RegistrationView: UIView {
         signUpButton.isEnabled = false
         signUpButton.alpha = 0.5
         
-        addSubview(bgImageView)
-        if let image = bgImageView.image {
-            let aspectRatio = image.size.width / image.size.height
-            bgImageView.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-            bgImageView.heightAnchor.constraint(equalTo: bgImageView.widthAnchor, multiplier: 1 / aspectRatio).isActive = true
-        }
+//        avatarContainer.addSubview(avatarSelector)
         
-        let stack = UIStackView(arrangedSubviews: [titleLabel, emailField, passwordField, confirmField, signUpButton])
+        let stack = UIStackView(arrangedSubviews: [titleLabel, nameField, emailField, passwordField, confirmField, signUpButton])
         stack.axis = .vertical
         stack.alignment = .fill
         stack.distribution = .equalSpacing
         stack.spacing = 16
+
+//        avatarSelector.centerX(inView: avatarContainer)
+//        avatarSelector.anchor(top: avatarContainer.topAnchor, bottom: avatarContainer.bottomAnchor, width: screenWidth/2, height: screenWidth/2)
         
-        addSubview(stack)
+        stack.translatesAutoresizingMaskIntoConstraints  = false
         
-        stack.anchor(top: bgImageView.bottomAnchor, left: leftAnchor,  right: rightAnchor, paddingTop: 32, paddingLeft: 16, paddingRight: 16)
+        addSubview(scrollView)
+        scrollView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
+        scrollView.addSubview(contentView)
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        contentView.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor, bottom: scrollView.bottomAnchor, right: scrollView.rightAnchor)
+        
+        contentView.addSubview(stack)
+        stack.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, paddingTop: 32, paddingLeft: 16, paddingBottom: 32, paddingRight: 16)
+
     }
 }

@@ -10,10 +10,12 @@ import Combine
 
 protocol ChatListInteractorProtocol {
     func observeChats()
+    func logout()
 }
 
 protocol ChatListInteractorOutput: AnyObject {
     func didReceiveChats(_ chats: [ChatViewModel])
+    func didLogOut()
 }
 
 class ChatListInteractor: ChatListInteractorProtocol {
@@ -30,5 +32,17 @@ class ChatListInteractor: ChatListInteractorProtocol {
             .store(in: &cancellables)
     }
     
-    
+    func logout() {
+        FirebaseFacade.shared.logout { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    self?.presenter?.didLogOut()
+                }
+            case .failure(let error):
+                print("error: \(error.localizedDescription)")
+            }
+        }
+    }
+        
 }

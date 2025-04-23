@@ -11,6 +11,7 @@
 		991185842DB1885E00F43EAE /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 991185832DB1885E00F43EAE /* CombineCocoa */; };
 		9911858C2DB25D3B00F43EAE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 9911858B2DB25D3B00F43EAE /* FirebaseFirestore */; };
 		991186642DB3F74A00F43EAE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 991186632DB3F74A00F43EAE /* Kingfisher */; };
+		9911866D2DB7050000F43EAE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 9911866C2DB7050000F43EAE /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 				991186642DB3F74A00F43EAE /* Kingfisher in Frameworks */,
 				991185842DB1885E00F43EAE /* CombineCocoa in Frameworks */,
 				9911844B2DAD597400F43EAE /* FirebaseAuth in Frameworks */,
+				9911866D2DB7050000F43EAE /* FirebaseStorage in Frameworks */,
 				9911858C2DB25D3B00F43EAE /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +150,7 @@
 				991185832DB1885E00F43EAE /* CombineCocoa */,
 				9911858B2DB25D3B00F43EAE /* FirebaseFirestore */,
 				991186632DB3F74A00F43EAE /* Kingfisher */,
+				9911866C2DB7050000F43EAE /* FirebaseStorage */,
 			);
 			productName = TalkUp;
 			productReference = 991183AC2DAAD82E00F43EAE /* TalkUp.app */;
@@ -645,6 +648,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 991186622DB3F72000F43EAE /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		9911866C2DB7050000F43EAE /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 991184492DAD597400F43EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

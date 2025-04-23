@@ -36,8 +36,8 @@ enum CellFactory {
 enum CellLayoutProvider {
     static func height(for item: ListItem) -> CGFloat {
         switch item {
-        case .chat:
-            return 70
+        case .chat: return 70
+        case .user: return 70
 //        case .settings:
 //            return 50
 //        case .notification:
@@ -57,6 +57,7 @@ enum CellLayoutProvider {
 
 enum ListItem {
     case chat(ChatViewModel)
+    case user(UserModel)
 //    case message(ConversationMessage)
 //    case settings(SettingsItem)
 //    case notification(NotificationItem)

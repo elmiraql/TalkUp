@@ -17,6 +17,7 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
     var presenter: RegistrationPresenterProtocol?
     var mainView: RegistrationView!
     private var cancellables = Set<AnyCancellable>()
+    private var selectedImage: UIImage?
    
     override func loadView() {
         super.loadView()
@@ -39,8 +40,8 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
         presenter?.didTapSignUp(
             email: mainView.emailField.text,
             password: mainView.passwordField.text,
-            confirmPassword: mainView.confirmField.text
-        )
+            confirmPassword: mainView.confirmField.text,
+            name: mainView.nameField.text)
     }
 
     func showError(message: String) {
@@ -51,28 +52,37 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
     
     private func bindValidation() {
         
+        let namePublisher = mainView.nameField.textPublisher
         let emailPublisher = mainView.emailField.textPublisher
         let passwordPublisher = mainView.passwordField.textPublisher
         let confirmPublisher = mainView.confirmField.textPublisher
-
-         passwordPublisher
-             .sink { [weak self] text in
-                 let error = text.count >= 6 ? nil : "Password must be at least 6 characters"
-                 self?.mainView.passwordField.setError(error)
-             }
-             .store(in: &cancellables)
-
-         Publishers.CombineLatest(passwordPublisher, confirmPublisher)
-             .sink { [weak self] pass, confirm in
-                 let error = pass == confirm ? nil : "Passwords donot match"
-                 self?.mainView.confirmField.setError(error)
-             }
-             .store(in: &cancellables)
         
-        Publishers.CombineLatest3(emailPublisher, passwordPublisher, confirmPublisher)
+        namePublisher
+            .sink { [weak self] name in
+                let isValid = name.trimmingCharacters(in: .whitespacesAndNewlines).count > 1
+                self?.mainView.nameField.setError(isValid ? nil : "Name is required")
+            }
+            .store(in: &cancellables)
+        
+        passwordPublisher
+            .sink { [weak self] text in
+                let error = text.count >= 6 ? nil : "Password must be at least 6 characters"
+                self?.mainView.passwordField.setError(error)
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest(passwordPublisher, confirmPublisher)
+            .sink { [weak self] pass, confirm in
+                let error = pass == confirm ? nil : "Passwords donot match"
+                self?.mainView.confirmField.setError(error)
+            }
+            .store(in: &cancellables)
+        
+        Publishers.CombineLatest4(namePublisher, emailPublisher, passwordPublisher, confirmPublisher)
             .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
-            .map { email, password, confirmPassword in
-                return !email.isEmpty &&
+            .map { name, email, password, confirmPassword in
+                return !name.isEmpty &&
+                !email.isEmpty &&
                 email.contains("@") &&
                 password.count >= 6 &&
                 password == confirmPassword
@@ -82,7 +92,6 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
                 self?.mainView.signUpButton.isEnabled = isValid
                 self?.mainView.signUpButton.alpha = isValid ? 1.0 : 0.5
             }
-        
             .store(in: &cancellables)
         
         emailPublisher
@@ -95,6 +104,7 @@ final class RegistrationViewController: UIViewController, RegistrationViewProtoc
             }
             .store(in: &cancellables)
         
-      
+        
     }
 }
+
