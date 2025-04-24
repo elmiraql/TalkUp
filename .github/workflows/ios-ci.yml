@@ -22,13 +22,13 @@ jobs:
     - name: Set up Swift
       run: swift --version
 
-    - name: Build TalkUp project
-      run: |
-        xcodebuild clean build \
-        -project TalkUp.xcodeproj \
-        -scheme TalkUp \
-        -sdk iphonesimulator \
-        -destination 'platform=iOS Simulator,name=iPhone 14'
+  - name: Build TalkUp project
+  run: |
+    xcodebuild clean build \
+    -project TalkUp.xcodeproj \
+    -scheme TalkUp \
+    -sdk iphonesimulator \
+    -destination 'platform=iOS Simulator,name=iPhone 14'
 
     - name: Run SwiftLint
       run: |
