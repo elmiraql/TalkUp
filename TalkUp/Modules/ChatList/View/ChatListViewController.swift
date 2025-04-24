@@ -37,6 +37,7 @@ final class ChatListViewController: UIViewController, ChatListViewProtocol {
             target: self,
             action: #selector(logoutTapped)
         )
+       
     }
 
     private func setupTableView() {

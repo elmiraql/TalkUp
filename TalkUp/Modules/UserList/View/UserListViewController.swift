@@ -50,6 +50,7 @@ extension UserListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         guard let user = presenter?.user(at: indexPath.row) else { return }
         let conversationVC = ConversationModuleBuilder.build(with: user)
         navigationController?.pushViewController(conversationVC, animated: true)

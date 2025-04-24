@@ -16,7 +16,7 @@ class ChatListView: UIView {
         label.textColor = .gray
         label.font = .systemFont(ofSize: 16, weight: .medium)
         label.textAlignment = .center
-        label.isHidden = true // будет показываться только если список пуст
+        label.isHidden = true
         return label
     }()
     

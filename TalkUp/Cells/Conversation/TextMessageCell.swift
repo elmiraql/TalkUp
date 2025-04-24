@@ -29,6 +29,8 @@ final class TextMessageCell: UITableViewCell {
         bubble.layer.cornerRadius = 16
         bubble.backgroundColor = .systemGray5
         bubble.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.backgroundColor = .clear
+//        backgroundColor = .clear
 
         messageLabel.numberOfLines = 0
         messageLabel.font = UIFont.systemFont(ofSize: 16)
@@ -43,7 +45,7 @@ final class TextMessageCell: UITableViewCell {
         
         switch message.style {
         case .normal:
-            backgroundColor = .white
+            backgroundColor = .clear
         case .highlighted:
             backgroundColor = .systemYellow.withAlphaComponent(0.3)
         case .important:

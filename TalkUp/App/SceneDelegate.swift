@@ -46,6 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().scrollEdgeAppearance = navBarAppearance
         UINavigationBar.appearance().compactAppearance = navBarAppearance
         UINavigationBar.appearance().tintColor = .black
+//        UINavigationBar.appearance().prefersLargeTitles = true
 
         // UITabBar
         let tabBarAppearance = UITabBarAppearance()
@@ -55,7 +56,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
         UITabBar.appearance().tintColor = .black
-        
+//        UINavigationBar.appearance().prefersLargeTitles = true
         window.rootViewController = rootViewController
         self.window = window
         window.makeKeyAndVisible()

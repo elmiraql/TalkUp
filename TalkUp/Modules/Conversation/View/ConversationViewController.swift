@@ -38,7 +38,7 @@ final class ConversationViewController: UIViewController, ConversationViewProtoc
         setupTable()
         bindSendAction()
         presenter?.fetchMessages(with: otherUser.uid)
-
+        title = otherUser.displayName
     }
 
     private func setupTable() {
@@ -50,6 +50,9 @@ final class ConversationViewController: UIViewController, ConversationViewProtoc
     func displayMessages(_ messages: [MessageDisplayable]) {
         self.mainView.tableView.reloadData()
         self.scrollToBottom()
+        let isEmpty = presenter?.numberOfMessages() == 0
+        mainView.emptyStateLabel.isHidden = !isEmpty
+        mainView.tableView.isHidden = isEmpty
     }
     
     func bindSendAction(){
@@ -89,7 +92,7 @@ extension ConversationViewController: UITableViewDataSource, UITableViewDelegate
         switch message.type {
         case .text:
             let cell = tableView.dequeueReusableCell(withIdentifier: TextMessageCell.reuseId, for: indexPath) as! TextMessageCell
-            cell.configure(with: message) 
+            cell.configure(with: message)
             return cell
         default:
             return UITableViewCell()

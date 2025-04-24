@@ -1,0 +1,36 @@
+name: iOS CI for TalkUp
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Ruby (for future tools like Fastlane)
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.1
+
+    - name: Set up Swift
+      run: swift --version
+
+    - name: Build TalkUp project
+      run: |
+        xcodebuild clean build \
+        -project TalkUp.xcodeproj \
+        -scheme TalkUp \
+        -sdk iphonesimulator \
+        -destination 'platform=iOS Simulator,name=iPhone 14'
+
+    - name: Run SwiftLint
+      run: |
+        brew install swiftlint || true
+        swiftlint

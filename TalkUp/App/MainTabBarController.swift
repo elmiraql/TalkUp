@@ -23,12 +23,16 @@ final class MainTabBarController: UITabBarController {
         
         let usersVC = UserListBuilder.build()
         let usersNav = UINavigationController(rootViewController: usersVC)
-           usersNav.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.2.fill"), tag: 1)
-
-//        let profile = ProfileModuleBuilder.build()
-//        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
-
+        usersNav.tabBarItem = UITabBarItem(title: "Users", image: UIImage(systemName: "person.2.fill"), tag: 1)
+        
+//        navigationController?.navigationBar.prefersLargeTitles = true
+//            navigationItem.largeTitleDisplayMode = .always
+        
+        //        let profile = ProfileModuleBuilder.build()
+        //        profile.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(systemName: "person"), tag: 1)
+        
         viewControllers = [chatsNav, usersNav] //profile
+//        viewControllers = [chats, usersVC]
     }
-  
+    
 }

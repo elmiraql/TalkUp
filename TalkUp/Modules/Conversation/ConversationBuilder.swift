@@ -23,7 +23,8 @@ enum ConversationModuleBuilder {
         presenter.router = router
         router.viewController = view
         interactor.presenter = presenter
-        
+        view.hidesBottomBarWhenPushed = true
+
         return view
     }
 }
